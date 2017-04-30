@@ -89,7 +89,7 @@ function writeResultFromTemp(tempFile) {
   console.time('append result file');
   const data = fs.readFileSync(tempFile, 'utf8');
   const array = data.split('\n');
-  array.sort(function(a, b) {
+  array.sort((a, b) => {
     const numa = Number(a.split(',')[0]);
     const numb = Number(b.split(',')[0]);
     return numa - numb;
@@ -116,7 +116,7 @@ function sortLargeData() {
     input: fs.createReadStream(INPUT),
   });
   inputLineReader
-    .on('line', function(line) {
+    .on('line', line => {
       lines.push(line);
       count++;
       if (count === 10000) {
@@ -125,7 +125,7 @@ function sortLargeData() {
         lines = [];
       }
     })
-    .on('close', function() {
+    .on('close', () => {
       writeResult();
     });
 }
@@ -150,7 +150,7 @@ function binarySearch(ar, el, compare) {
 function searchResult(tempFile, num) {
   const data = fs.readFileSync(tempFile, 'utf8');
   const array = data.split('\n');
-  const index = binarySearch(array, num, function(a, b) {
+  const index = binarySearch(array, num, (a, b) => {
     return a - Number(b.split(',')[0]);
   });
   console.log(`result:${array[index]}`);
@@ -177,7 +177,7 @@ function search(number) {
 }
 
 // -------------main--------------
-// init();
-// sortLargeData();
-// 有了template文件后可以单独运行search方法
-search(Math.floor(Math.random() * MAX));
+init();
+sortLargeData();
+// 有了template文件后再单独运行search方法
+// search(Math.floor(Math.random() * MAX));
